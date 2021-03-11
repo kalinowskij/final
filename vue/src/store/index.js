@@ -15,14 +15,14 @@ const store = createStore({
         saveToServer({getters}) {
                 console.log("send")
                 console.log( getters.getCode)
-                axios.post("http://localhost/data", {code: JSON.stringify(getters.getCode)})
+                axios.post("/data", {code: JSON.stringify(getters.getCode)})
                     .then(response => {
                         console.log('save to server')
                         console.log(response)
                     });
         },
         getFromServer({commit}){
-            axios.get("http://localhost/data")
+            axios.get("/data")
                 .then(response => {
                     console.log('get to server')
                     console.log(response.data.data)
