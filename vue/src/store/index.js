@@ -15,18 +15,23 @@ const store = createStore({
         saveToServer({getters}) {
                 console.log("send")
                 console.log( getters.getCode)
-                axios.post("http://localhost:8081/data", {code: JSON.stringify(getters.getCode)})
+                axios.post("http://localhost/data", {code: JSON.stringify(getters.getCode)})
                     .then(response => {
                         console.log('save to server')
                         console.log(response)
                     });
         },
         getFromServer({commit}){
-            axios.get("http://localhost:8081/data")
+            axios.get("http://localhost/data")
                 .then(response => {
                     console.log('get to server')
                     console.log(response.data.data)
-                    commit('uploadCode', JSON.parse(response.data.data));
+                    if(!response.data.data){
+                        commit('uploadCode', []);
+                    }else{
+                        commit('uploadCode', JSON.parse(response.data.data));
+                    }
+
                 });
         }
     },
